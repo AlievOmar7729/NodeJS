@@ -1,0 +1,14 @@
+{
+  "firstName": "Omar",
+  "lastName:": "Aliev",
+  "languages": [
+    {
+      "title": "NodeJS",
+      "level": "Junior"
+    },
+    {
+      "title": "PHP",
+      "level": "Junior"
+    }
+  ]
+}
