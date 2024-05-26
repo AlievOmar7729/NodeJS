@@ -17,6 +17,7 @@ router.get('/users',auth, async (req, res) => {
 router.get('/users/:id', auth,async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
+        await user.populate('tasks');
         res.status(200).send(user)
     }
     catch (error){
@@ -45,6 +46,15 @@ router.delete('/users/:id', auth,async (req, res) => {
     } catch (error) {
         console.error("Error deleting user:", error);
         res.status(400).send("Internal Server Error");
+    }
+});
+router.delete('/users', auth, async (req, res) => {
+    try {
+        await User.deleteMany({});
+        res.status(200).send("All users deleted successfully");
+    } catch (error) {
+        console.error("Error deleting users:", error);
+        res.status(500).send("Internal Server Error");
     }
 });
 

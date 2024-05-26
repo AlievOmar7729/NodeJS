@@ -50,7 +50,8 @@ const User = new mongoose.Schema({
             required: true
         }
     }]
-})
+}, { toJSON: { virtuals: true }, toObject:{virtuals: true} })
+
 User.pre('save', async function (next) {
     const user = this;
     if (user.isModified('password')) {
@@ -79,6 +80,13 @@ User.methods.generateAuthToken = async function () {
     return token
 }
 
+User.methods.toJSON = function() {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
+    return userObject
+}
 
 const someUser = mongoose.model("User", User)
 module.exports = someUser
